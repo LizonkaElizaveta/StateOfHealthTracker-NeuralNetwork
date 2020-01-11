@@ -5,13 +5,15 @@ from keras.models import Sequential
 from numpy import loadtxt
 
 # load the dataset
-dataset = loadtxt('data/pima-indians-diabetes.csv', delimiter=',')
+dataset = loadtxt('data/data.csv', delimiter=',')
 # split into input (X) and output (y) variables
-X = dataset[:, 0:8]
-y = dataset[:, 8]
+X = dataset[:, 0:17]
+y = dataset[:, 4]
 # define the keras model
 model = Sequential()
-model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(64, input_dim=17, activation='relu'))
+model.add(Dense(32, input_dim=14, activation='relu'))
+model.add(Dense(16, input_dim=12, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 # compile the keras model
