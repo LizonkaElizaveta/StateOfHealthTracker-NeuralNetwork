@@ -11,15 +11,13 @@ X = dataset[:, 0:17]
 y = dataset[:, 4]
 # define the keras model
 model = Sequential()
-model.add(Dense(64, input_dim=17, activation='relu'))
-model.add(Dense(32, input_dim=14, activation='relu'))
-model.add(Dense(16, input_dim=12, activation='relu'))
-model.add(Dense(8, activation='relu'))
+model.add(Dense(12, input_dim=17, activation='tanh'))
+model.add(Dense(8, activation='sigmoid'))
 model.add(Dense(1, activation='sigmoid'))
 # compile the keras model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', 'acc'])
 # fit the keras model on the dataset
-history = model.fit(X, y, epochs=150, validation_split=0.25, batch_size=10, verbose=0)
+history = model.fit(X, y, epochs=1500, validation_split=0.45, batch_size=100, verbose=1)
 
 print(model.summary())
 
