@@ -2,34 +2,42 @@
 import matplotlib.pyplot as plt
 import numpy
 
-from keras.layers import Dense
-from keras.models import Sequential
+import tensorflow as tf
+
+Dense = tf.keras.layers.Dense
+Sequential = tf.keras.models.Sequential
 from numpy import loadtxt
 
 # load the dataset
-dataset = loadtxt('data/big.dataset.csv', delimiter=',')
+dataset1 = loadtxt('data/file1.csv', delimiter=',')
+dataset2 = loadtxt('data/file2.csv', delimiter=',')
 # split into input (X) and output (y) variables
-X = dataset[:, 0:16]
-numpy.random.shuffle(X)
+# X = dataset[:1998, 0:3]
+X = numpy.stack([dataset1, dataset2])
+# numpy.random.shuffle(X)
 
-y = dataset[:, 9]
+y = numpy.array([1., 0.])
+# y = dataset[:, 9]
 # define the keras model
 model = Sequential()
-model.add(Dense(12, input_dim=16, activation='relu'))
+model.add(tf.keras.layers.GRU(128))
+model.add(Dense(12, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 # compile the keras model
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', 'acc'])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['mse', 'acc'])
 # fit the keras model on the dataset
-history = model.fit(X, y, epochs=1500, validation_split=0.35, batch_size=100, verbose=0)
+history = model.fit(X, y, epochs=50, batch_size=100, verbose=0)
 
 print(model.summary())
 
 # evaluate the keras model
-_, accuracy, _ = model.evaluate(X, y)
-print('Accuracy: %.2f' % (accuracy * 100))
+# _, accuracy, _ = model.evaluate(X, y)
+# print('Accuracy: %.2f' % (accuracy * 100))
 # make class predictions with the model
-predictions = model.predict_classes(X)
+predictions = model.predict(X)
+print('Predictions:', predictions)
+
 # summarize the first 5 case
 for i in range(100):
     print('%s => %d (expected %d)' % (X[i].tolist(), predictions[i], y[i]))
