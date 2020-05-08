@@ -4,21 +4,21 @@ afile = open("data/Random_patients.csv", "w")
 
 
 def fun_patient():
-    line = str(random.uniform(1, 2))  # скорость
+    line = str(random.uniform(3, 4))  # скорость
     afile.write(line + ',')
-    line = str(random.uniform(8.4, 19.6))  # левенштейн
+    line = str(random.uniform(8.4, 10.6))  # левенштейн
     afile.write(line + ',')
-    line = str(random.uniform(90000.000, 180000.000))  # время печати в млс
+    line = str(random.uniform(90000, 110000))  # время печати в млс
     afile.write(line + ',')
-    line = str(random.uniform(10, 20))  # число промахов
+    line = str(random.uniform(10, 15))  # число промахов
     afile.write(line + ',')
-    line = str(random.uniform(2050, 4704))  # расстояние от кнопки
+    line = str(random.uniform(20000, 3704))  # расстояние от кнопки
     afile.write(line + ',')
     line = str(random.uniform(14, 20))  # таппинг тест правой рук
     afile.write(line + ',')
     line = str(random.uniform(20, 23))  # таппинг текст левой руки
     afile.write(line + ',')
-    line = str(random.uniform(550, 1030))  # расстояние фигуры
+    line = str(random.uniform(55000, 80300))  # расстояние фигуры
     afile.write(line + ',1\n')  # пациенты
 
 
@@ -26,21 +26,21 @@ pass
 
 
 def fun_health():
-    line = str(random.uniform(4, 5.5))  # скорость
+    line = str(random.uniform(4, 6.5))  # скорость
     afile.write(line + ',')
-    line = str(random.uniform(1, 4))  # левенштейн
+    line = str(random.uniform(3, 6))  # левенштейн
     afile.write(line + ',')
-    line = str(random.uniform(40000.000, 70000.000))  # время печати в млс
+    line = str(random.uniform(40000, 70000))  # время печати в млс
     afile.write(line + ',')
-    line = str(random.uniform(0, 1))  # число промахов
+    line = str(random.uniform(0,4))  # число промахов
     afile.write(line + ',')
-    line = str(random.uniform(20, 100))  # расстояние от кнопки
+    line = str(random.uniform(9000, 100000))  # расстояние от кнопки
     afile.write(line + ',')
-    line = str(random.uniform(47, 70))  # таппинг тест правой рук
+    line = str(random.uniform(40, 50))  # таппинг тест правой рук
     afile.write(line + ',')
-    line = str(random.uniform(40, 65))  # таппинг текст левой руки
+    line = str(random.uniform(44, 47))  # таппинг текст левой руки
     afile.write(line + ',')
-    line = str(random.uniform(5, 10))  # расстояние фигуры
+    line = str(random.uniform(12000, 13000))  # расстояние фигуры
     afile.write(line + ',0\n')
 
 

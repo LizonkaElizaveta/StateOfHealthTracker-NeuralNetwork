@@ -3,8 +3,9 @@ import random
 
 import matplotlib.pyplot as plt
 import numpy
+from keras import regularizers
 
-from keras.layers import Dense, Dropout, LSTM, Embedding
+from keras.layers import Dense, Dropout, LSTM, Embedding, GRU, Flatten
 from keras.models import Sequential
 from numpy import loadtxt
 
@@ -13,21 +14,26 @@ from numpy import loadtxt
 dataset = loadtxt('data/Random_patients.csv', delimiter=',')
 # split into input (X) and output (y) variables
 X = dataset[:, 0:7]
-numpy.random.shuffle(X)
+X = X.reshape(-1, 1, 7)
 
 y = dataset[:, 8]
 # define the keras model
 model = Sequential()
-model.add(Dense(random.randint(3,64), input_dim=7, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(1, activation='softmax'))
-
-# compile the keras model
-model.compile(loss='binary_crossentropy', optimizer='SGD', metrics=['mse', 'acc'])
+model.add(GRU(100, input_shape=(1, 7), return_sequences=True))
+model.add(LSTM(50, input_shape=(1, 7), return_sequences=True))
+model.add(Flatten())
+model.add(Dropout(0.2))
+model.add(Dense(20, activation="relu", kernel_regularizer=regularizers.l2(0.01)))
+model.add(Dropout(0.2))
+model.add(Dense(16, activation="relu", kernel_regularizer=regularizers.l2(0.01)))
+model.add(Dropout(0.2))
+model.add(Dense(16, activation="relu", kernel_regularizer=regularizers.l2(0.01)))
+model.add(Dense(1, activation="sigmoid", kernel_regularizer=regularizers.l2(0.01)))
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['mse', 'acc'])
 # fit the keras model on the dataset
-history = model.fit(X, y, epochs=30, validation_split=0.1, batch_size=5000, verbose=1)
+history = model.fit(X, y, epochs=10, validation_split=0.1, shuffle=True, batch_size=1000, verbose=1)
 
 print(model.summary())
 
@@ -35,10 +41,10 @@ print(model.summary())
 _, accuracy, _ = model.evaluate(X, y)
 print('Accuracy: %.2f' % (accuracy * 100))
 # make class predictions with the model
-predictions = model.predict_classes(X)
+predictions = model.predict(X)
 # summarize the first 5 case
 for i in range(100):
-    print('%s => %d (expected %d)' % (X[i].tolist(), predictions[i], y[i]))
+    print('%s => %f (expected %f)' % (X[i].tolist(), predictions[i], y[i]))
 
 # Plot training & validation accuracy values
 plt.plot(history.history['acc'])
