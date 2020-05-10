@@ -49,7 +49,7 @@ def fun_health():
 
 pass
 
-for i in range(100000):
+for i in range(1500000):
     if random.randint(0, 1) == 1:
         fun_patient()
     else:

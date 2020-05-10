@@ -9,25 +9,30 @@ from numpy import loadtxt
 dataset = loadtxt('data/Testing_patients.csv', delimiter=',')
 # split into input (X) and output (y) variables
 X = dataset[:, 0:7]
-X = X.reshape(-1, 1, 7)
+# X = X.reshape(-1, 1, 7)
 
 y = dataset[:, 8]
 # define the keras model
 model = Sequential()
-model.add(LSTM(150, input_shape=(1, 7), return_sequences=True, dropout=0.1))
-model.add(Flatten())
-model.add(Dense(256))
-model.add(Dropout(0.2))
-model.add(Dense(128))
-model.add(Dropout(0.2))
-model.add(Dense(64))
-model.add(Dense(16))
-model.add(Dense(1, activation="sigmoid"))
-model.compile(loss='mean_squared_error',
-              optimizer='rmsprop',
-              metrics=['mse', 'acc'])
-# fit the keras model on the dataset
-history = model.fit(X, y, epochs=5, validation_split=0.1, shuffle=True, batch_size=5000, verbose=0)
+# model.add(LSTM(150, input_shape=(1, 7), return_sequences=True, dropout=0.1))
+# model.add(Flatten())
+# model.add(Dense(256))
+# model.add(Dropout(0.2))
+# model.add(Dense(128))
+# model.add(Dropout(0.2))
+# model.add(Dense(64))
+# model.add(Dense(16))
+# model.add(Dense(1, activation="sigmoid"))
+# model.compile(loss='mean_squared_error',
+#               optimizer='rmsprop',
+#               metrics=['mse', 'acc'])
+# model.add(Flatten())
+model.add(Dense(199))
+model.add(Dropout(0.13617411274661234))
+model.add(Dense(711))
+model.add(Dense(1, activation='relu'))
+model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse', 'acc'])
+history = model.fit(X, y, epochs=5, validation_split=0.25, shuffle=True, batch_size=5000, verbose=0)
 
 print(model.summary())
 
@@ -61,7 +66,7 @@ plt.show()
 dataset = loadtxt('data/Testing_validation_patients.csv', delimiter=',')
 # split into input (X) and output (y) variables
 X = dataset[:, 0:7]
-X = X.reshape(-1, 1, 7)
+# X = X.reshape(-1, 1, 7)
 
 y = dataset[:, 8]
 # evaluate the keras model
