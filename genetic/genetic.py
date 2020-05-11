@@ -72,7 +72,7 @@ class GeneticAlgorithm:
 
             for param in self.mutation_config:
                 child[param] = random.choice(
-                    [first_network.network[param], second_network.network[param]]
+                    [first_network.network_params[param], second_network.network_params[param]]
                 )
 
             network = NeuralNetwork(self.mutation_config)
@@ -95,7 +95,7 @@ class GeneticAlgorithm:
 
         mutation_key = random.choice(list(self.mutation_config.keys()))
 
-        network.network[mutation_key] = random.choice(self.mutation_config[mutation_key])
+        network.network_params[mutation_key] = random.choice(self.mutation_config[mutation_key])
 
         return network
 
